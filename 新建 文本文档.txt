@@ -1,0 +1,41 @@
+R语言学习1.1
+search()	#检查套件信息
+[1] ".GlobalEnv"        "tools:rstudio"     "<environment>"     "package:stats"    
+ [5] "package:graphics"  "package:grDevices" "package:utils"     "package:datasets" 
+ [9] "package:methods"   "Autoloads"         "package:base" 
+
+head(USArrests)	#查看自带的数据集USArrests
+           Murder Assault UrbanPop Rape
+Alabama      13.2     236       58 21.2
+Alaska       10.0     263       48 44.5
+Arizona       8.1     294       80 31.0
+Arkansas      8.8     190       50 19.5
+California    9.0     276       91 40.6
+Colorado      7.9     204       78 38.7
+
+USArrests_z <- scale(USArrests)		#标准化 -> scale() 标准化函数
+
+#hclust(..., method = "average")：使用层次聚类算法，以“平均链接法”（average linkage）合并类簇。平均链接法：计算两类中所有数据点之间距离的平均值，作为两类间的距离。
+hc <- hclust(dist(USArrests_z),method ="average")	
+
+#hang = -1：将树状图的叶子节点对齐到底部，使图形更清晰（默认节点会“悬挂”在底部上方）cex = 0.8：调整标签字体大小为默认的 80%，防止文字重叠
+plot(hc,hang = -1,cex = 0.8)	
+
+1.2
+#search()的功能：显示当前R会话中已加载的包和环境的搜索路径。head(rownames(installed.packages()))的功能：列出已安装的R包中前几个包的名字。
+#grep（“套件”，指定函数，value = TRUE），检查套件
+search()
+
+grep("lattice",search(),value = TRUE)
+
+head(rownames(installed.packages()))
+
+grep("lattice",rownames(install.packages()),value = TRUE)
+
+library(lattice)#加载指定套件
+
+str(barley)
+
+head(barley)
+
+dotplot(variety ~ yield | year * site,data = barley)	#使用dotplot 函数绘制分面点图，展示不同条件下品种（variety）与产量（yield）的关系
